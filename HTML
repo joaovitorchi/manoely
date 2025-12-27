@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Te amo ❤️</title>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: #000;
+  color: #ff4d6d;
+  font-family: monospace;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  text-align: center;
+  overflow: hidden;
+}
+
+/* ===== CANVAS HEART ===== */
+#heartWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: beat 1.4s infinite;
+  margin-left: 450px;
+  margin-bottom: 30px;
+}
+
+canvas {
+  display: block;
+  max-width: 100%;
+}
+
+
+@keyframes beat {
+  0%   { transform: scale(1); }
+  30%  { transform: scale(1.05); }
+  50%  { transform: scale(1); }
+  70%  { transform: scale(1.08); }
+  100% { transform: scale(1); }
+} 
+
+/* ===== TEXT ===== */
+.text {
+  font-size: 26px;
+  letter-spacing: 4px;
+  margin-bottom: 30px;
+  animation: pulse 1.6s infinite;
+}
+
+@keyframes pulse {
+  0% { opacity: 1; }
+  50% { opacity: 0.45; }
+  100% { opacity: 1; }
+}
+
+/* ===== BUTTON ===== */
+button {
+  padding: 14px 32px;
+  font-size: 18px;
+  border-radius: 30px;
+  border: none;
+  cursor: pointer;
+  background: linear-gradient(135deg, #ff4d6d, #ff1f4c);
+  color: #fff;
+  transition: transform 0.25s, box-shadow 0.25s;
+  box-shadow: 0 0 20px rgba(255, 77, 109, 0.4);
+}
+
+button:hover {
+  transform: scale(1.08);
+  box-shadow: 0 0 30px rgba(255, 77, 109, 0.8);
+}
+</style>
+</head>
+
+<body>
+
+<div id="heartWrapper">
+  <canvas id="heartCanvas"></canvas>
+</div>
+
+<div class="text" id="text"></div>
+
+<button onclick="falarComigo()">Clica aqui 💬</button>
+
+<audio id="music" loop>
+  <source src="https://www.youtube.com/watch?v=HR4ZxjGQGYY" type="audio/mpeg">
+</audio>
+
+<script>
+// ================= ASCII HEART =================
+const asciiHeart = `
+             ,  xp  u  _                  _  j- _p  _
+      _  \`N_  *p \`b_ b \`L q          _ j _@ jF jF _p" _y^
+      "*s_ "*, "h_ 9_ 0_"p k &     ,jFjF @ j"_p"_p" _p"  _*" 
+    *u_  "*,_ 9u_"q_"b_0_Np9p0 b  jLd 0 0 J"jP j@ _M" _m@" __* 
+  __  "9m__ "*_ 9u_"u_0_9_9_0JL0 fd Fj'd d p"j* a*"_w@" _w*"  __ 
+   "^m,_  "*u_"9u_"q_9W"M"p0Jk0]NF0jNFgL@jP_#"w@_a*"__*^" __w*"" 
+  u__  ""*w__"9u_"*u_N_*C4@N0NNNNN##0ZQRpCpCpF_*"_w*" _a*^"  ___ 
+    ""**u___"^m,_"*s"NCNCNDWNNNNNNNNNNEAZEMEm@Lw^__w*""__aw*^"" 
+   *ua___ ""**w__"*wE@6PN@0N###########NNW0Z*EL*^"_am*"" ____am
+       """^**wa_IF^*6Z@pNN##############NBDMEZ**""_gw**^""" 
+      ^^*r*mwwaj_EEZ@qNBN################NNWp49ZEELaam**r**^ 
+         aaaaaaaaZZZZZ##N#################N#EZZZZLaaaaaas
+            _aam**r**NNNN################N#EDM*r*mwwag,
+              amr*^ZZWMQ#N###############NNMpEZ5^**ua
+               -*"EZ*MN@NNBN###########N@ZNEZ*6E"*r
+                 "jw*TbN@NN#NN######NNNBWNZNEP*2"" 
+                   -@j*Cp5AWNNNNNNNNNbA@NNC*CP-    
+                     "w"g"djF0dNNF#0NF#NC4Ch       
+                       \` @jFjN@JNF0JL0\`L"p"        
+                          @jFj^0 Ft 0 L\`           
+                           \` # # FJF]r"            
+                               F F #               
+                                 F                 
+`;
+
+const canvas = document.getElementById("heartCanvas");
+const ctx = canvas.getContext("2d");
+
+const lines = asciiHeart.split("\n");
+const fontSize = 12;
+const lineHeight = 14;
+
+canvas.width = 900;
+canvas.height = lines.length * lineHeight;
+
+ctx.font = `${fontSize}px Courier New, monospace`;
+ctx.fillStyle = "#ff4d6d";
+ctx.textBaseline = "top";
+
+lines.forEach((line, i) => {
+  ctx.fillText(line, 0, i * lineHeight);
+});
+
+// ================= TEXT DIGIT =================
+const mensagem = "TE AMO MANOELY ❤️";
+const textEl = document.getElementById("text");
+let i = 0;
+
+function digitar() {
+  if (i < mensagem.length) {
+    textEl.innerHTML += mensagem[i];
+    i++;
+    setTimeout(digitar, 120);
+  }
+}
+digitar();
+
+// ================= MUSIC =================
+const music = document.getElementById("music");
+music.volume = 0;
+music.play();
+
+function falarComigo() {
+  music.volume = 0.8;
+  music.play();
+  window.open("https://wa.me/5542999715014", "_blank");
+}
+
+</script>
+
+</body>
+</html>
