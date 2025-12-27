@@ -23,14 +23,14 @@ body {
   overflow: hidden;
 }
 
-/* ===== CANVAS HEART ===== */
+/* ===== HEART ===== */
 #heartWrapper {
   display: flex;
   justify-content: center;
   align-items: center;
   animation: beat 1.4s infinite;
-  margin-left: 450px;
   margin-bottom: 30px;
+  margin-left: 400px;
 }
 
 canvas {
@@ -38,14 +38,14 @@ canvas {
   max-width: 100%;
 }
 
-
+/* ===== HEART BEAT ===== */
 @keyframes beat {
   0%   { transform: scale(1); }
   30%  { transform: scale(1.05); }
   50%  { transform: scale(1); }
   70%  { transform: scale(1.08); }
   100% { transform: scale(1); }
-} 
+}
 
 /* ===== TEXT ===== */
 .text {
@@ -70,7 +70,7 @@ button {
   cursor: pointer;
   background: linear-gradient(135deg, #ff4d6d, #ff1f4c);
   color: #fff;
-  transition: transform 0.25s, box-shadow 0.25s;
+  transition: transform 0.25s, box-shadow 0.25s, opacity 0.6s;
   box-shadow: 0 0 20px rgba(255, 77, 109, 0.4);
 }
 
@@ -83,17 +83,26 @@ button:hover {
 
 <body>
 
+<!-- ===== HEART ===== -->
 <div id="heartWrapper">
   <canvas id="heartCanvas"></canvas>
 </div>
 
+<!-- ===== TEXT ===== -->
 <div class="text" id="text"></div>
 
-<button onclick="falarComigo()">Clica aqui 💬</button>
+<!-- ===== BUTTONS ===== -->
+<button id="btnStart" onclick="iniciarMusica()">Clica aqui</button>
 
+<button id="btnTalk" onclick="falarComigo()" style="display:none; margin-top:20px;">
+  💖 Falar comigo
+</button>
+
+<!-- ===== MUSIC ===== -->
 <audio id="music" loop>
   <source src="musica.mp3" type="audio/mpeg">
 </audio>
+
 
 <script>
 // ================= ASCII HEART =================
@@ -123,6 +132,7 @@ const asciiHeart = `
                                  F                 
 `;
 
+// ================= DRAW HEART =================
 const canvas = document.getElementById("heartCanvas");
 const ctx = canvas.getContext("2d");
 
@@ -144,30 +154,38 @@ lines.forEach((line, i) => {
 // ================= TEXT DIGIT =================
 const mensagem = "TE AMO MANOELY ❤️";
 const textEl = document.getElementById("text");
-let i = 0;
+let idx = 0;
 
 function digitar() {
-  if (i < mensagem.length) {
-    textEl.innerHTML += mensagem[i];
-    i++;
+  if (idx < mensagem.length) {
+    textEl.innerHTML += mensagem[idx];
+    idx++;
     setTimeout(digitar, 120);
   }
 }
 digitar();
 
-// ================= MUSIC =================
+// ================= MUSIC + BUTTON FLOW =================
 const music = document.getElementById("music");
-music.volume = 0;
-music.play();
+music.volume = 0.8;
 
-function falarComigo() {
-  music.volume = 0.8;
+const btnStart = document.getElementById("btnStart");
+const btnTalk = document.getElementById("btnTalk");
+
+function iniciarMusica() {
   music.play();
-  window.open("https://wa.me/5542999715014", "_blank");
+  btnStart.style.display = "none";
+
+  // aparece depois de 12 segundos
+  setTimeout(() => {
+    btnTalk.style.display = "inline-block";
+  }, 12000);
 }
 
+function falarComigo() {
+  window.open("https://wa.me/5542999715014", "_blank");
+}
 </script>
 
 </body>
 </html>
-
